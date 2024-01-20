@@ -34,6 +34,7 @@ const FormSchema = z
       .string()
       .min(6, "Password must be at least 6 characters ")
       .max(50, "Password must be less than 50 characters"),
+
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Password and confirm password doesn't match!",
@@ -83,14 +84,14 @@ const SignUpForm = () => {
         {...register("firstName")}
         errorMessage={errors.firstName?.message}
         isInvalid={!!errors.firstName}
-        label="Nome do usuário"
+        label="Nome"
         startContent={<UserIcon className="w-4" />}
       />
       <Input
         {...register("lastName")}
         errorMessage={errors.lastName?.message}
         isInvalid={!!errors.lastName}
-        label="Nome do usuário"
+        label="Sobrenome"
         startContent={<UserIcon className="w-4" />}
       />
       <Input
