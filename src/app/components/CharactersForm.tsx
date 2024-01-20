@@ -43,12 +43,13 @@ const CharactersForm = () => {
   })
 
   const saveCharacter: SubmitHandler<InputType> = async (data) => {
+
     const character = {
       name: data.name,
       class: data.class,
       userId: session.user.id,
-      /* createdAt: Date.now(),
-      updatedAt: Date.now(), */
+/*       createdAt: e1.toISOString(),
+      updatedAt: e2.toISOString(), */
     }
     /* const character = data */
     try {

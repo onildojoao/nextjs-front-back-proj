@@ -31,11 +31,15 @@ export async function registerCharacter(
 }
 
 export async function registerPurchase(
-  purchase: Omit<Purchase, "id" | "createdAt" | "value" | "userId">
+  purchase: Omit<Purchase, "id" | "createdAt">
 ) {
   console.log(purchase)
-/*   const populatedUser = purchase
-   const result = await prisma.purchase.create({
+  const populatedUser = {
+    userId: purchase.userId,
+    value: purchase.value,
+  }
+
+  const result = await prisma.purchase.create({
     data: { ...purchase },
-  })  */
+  })
 }
