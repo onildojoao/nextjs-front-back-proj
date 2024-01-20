@@ -1,6 +1,10 @@
 import SignUpForm from "@/app/components/SignUpForm";
 import { Image, Link } from "@nextui-org/react";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Tela de Cadastro",
+}
 const SignupPage = () => {
   return (
     <main className="flex flex-col items-center justify-center p-5 h-[calc(100vh-65px)]">
