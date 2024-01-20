@@ -1,4 +1,4 @@
-
+/* 
 import prisma from "@/lib/prisma"
 import * as bcrypt from "bcrypt"
 import { AuthOptions } from "next-auth"
@@ -65,3 +65,4 @@ const authOptions: AuthOptions = {
 }
 
 export default authOptions
+ */
