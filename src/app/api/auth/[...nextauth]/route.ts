@@ -1,4 +1,11 @@
-import prisma from "@/lib/prisma"
+ // Update the path accordingly
+import NextAuth from "next-auth"
+import authOptions from "./options"
+
+const handler = NextAuth(authOptions)
+export { handler as GET, handler as POST }
+
+/* import prisma from "@/lib/prisma"
 import * as bcrypt from "bcrypt"
 import { AuthOptions } from "next-auth"
 import NextAuth from "next-auth/next"
@@ -65,4 +72,4 @@ export const authOptions: AuthOptions = {
 
 const handler = NextAuth(authOptions)
 
-export { handler as GET, handler as POST }
+export { handler as GET, handler as POST } */

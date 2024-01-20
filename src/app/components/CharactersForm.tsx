@@ -1,17 +1,9 @@
 "use client"
-import { registerCharacter, registerUser } from "@/lib/actions/authActions"
-import {
-  EnvelopeIcon,
-  EyeIcon,
-  EyeSlashIcon,
-  KeyIcon,
-  UserIcon,
-} from "@heroicons/react/20/solid"
+import { registerCharacter } from "@/lib/actions/authActions"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, Input } from "@nextui-org/react"
 import { useSession } from "next-auth/react"
 import { redirect, useRouter } from "next/navigation"
-import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { toast } from "react-toastify"
 import { z } from "zod"
@@ -43,13 +35,16 @@ const CharactersForm = () => {
   })
 
   const saveCharacter: SubmitHandler<InputType> = async (data) => {
+    if (!session) {
+      toast.error("Falha ao obter dados do usuário!")
+      router.push("/auth/signin")
+      return
+    }
 
     const character = {
       name: data.name,
       class: data.class,
       userId: session.user.id,
-/*       createdAt: e1.toISOString(),
-      updatedAt: e2.toISOString(), */
     }
     /* const character = data */
     try {

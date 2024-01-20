@@ -34,6 +34,12 @@ const PurchasesForm = () => {
   })
 
   const savePurchase: SubmitHandler<InputType> = async (data) => {
+    if (!session) {
+      toast.error("Falha ao obter dados do usuário!")
+      router.push("/auth/signin")
+      return
+    }
+
     const purchase = {
       value: data.value,
       userId: session.user.id,

@@ -1,23 +1,32 @@
 "use server"
 
-import { Character, Purchase, User } from "@prisma/client"
-
-import * as bcrypt from "bcrypt"
-
 import { prisma } from "@/lib/prisma"
 
 export async function findCharacters(userId: any) {
-  const result = await prisma.character.findMany({
+  return prisma.character.findMany({
     where: { userId: userId },
   })
-  console.log("Personagens:" + result)
-  return result
 }
 
 export async function findPurchases(userId: any) {
-  const result = await prisma.purchase.findMany({
+  /*  const result = await prisma.purchase.findMany({
     where: { userId: userId },
   })
   console.log("Compras:" + result)
-  return result
+  return result */
+
+  /* prisma.purchase
+  .findMany({
+    where: { userId: userId },
+  })
+  .then((res) => {
+    return res
+  })
+  .catch((err) => {
+    console.error("Erro ao buscar compras:" + err)
+  }) */
+
+  return prisma.purchase.findMany({
+    where: { userId: userId },
+  })
 }

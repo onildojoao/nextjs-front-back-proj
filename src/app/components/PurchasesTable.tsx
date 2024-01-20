@@ -1,19 +1,63 @@
 "use client"
 
 import { findPurchases } from "@/lib/actions/findActions"
+import { PurchaseItem } from "@/types/purchase"
+import { log } from "console"
 import { useSession } from "next-auth/react"
+import { useCallback, useEffect, useState } from "react"
 
-async function loadPurchases(session) {
-  const purchases = await findPurchases(session.user.id)
-
+async function loadPurchases(session: any) {
+  const purchases: PurchaseItem[] = await findPurchases(session.user.id)
+  console.log(purchases)
   return purchases
 }
 
 const PurchasesTable = () => {
   const { data: session } = useSession()
 
-  const retrievedPurchases = loadPurchases(session)
-  console.log(retrievedPurchases)
+  const [purchaseList, setPurchaseList] = useState<PurchaseItem[]>()
+
+  const initPurchaseData = useCallback(async () => {
+    const retrievedPurchases = await loadPurchases(session)
+    setPurchaseList(retrievedPurchases)
+    console.log(retrievedPurchases)
+  }, [session])
+
+  useEffect(() => {
+    initPurchaseData()
+  }, [initPurchaseData])
+
+  function processStringDate(param: string | null) {
+    if (!param) return
+    console.log(param)
+    const date = new Date(Number(param))
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    return `${day}/${month}/${year}`
+  }
+
+  function renderPurchaseList(): React.ReactNode {
+    if (!purchaseList?.length) return
+
+    return (
+      <tbody>
+        {purchaseList?.map((purchaseItem, index) => (
+          <tr
+            key={`${purchaseItem.id}--${index}`}
+            className="border-b dark:border-neutral-500"
+          >
+            <td className="whitespace-nowrap  px-6 py-4">
+              {processStringDate(purchaseItem.createdAt)}
+            </td>
+            <td className="whitespace-nowrap  px-6 py-4">
+              {purchaseItem.value}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    )
+  }
 
   return (
     <div className="flex flex-col justify-center w-full">
@@ -29,16 +73,7 @@ const PurchasesTable = () => {
             </th>
           </tr>
         </thead>
-        <tbody>
-          <tr className="border-b dark:border-neutral-500">
-            <td className="whitespace-nowrap  px-6 py-4">19/10/2023</td>
-            <td className="whitespace-nowrap  px-6 py-4">950</td>
-          </tr>
-          <tr className="border-b dark:border-neutral-500">
-            <td className="whitespace-nowrap  px-6 py-4">28/11/2023</td>
-            <td className="whitespace-nowrap  px-6 py-4">700</td>
-          </tr>
-        </tbody>
+        {renderPurchaseList()}
       </table>
     </div>
   )

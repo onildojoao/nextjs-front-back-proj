@@ -25,6 +25,7 @@ export async function registerCharacter(
   character: Omit<Character, "id" | "userId" | "createdAt" | "updatedAt">
 ) {
   const populatedUser = character
+  let createdAd = String(new Date().getTime())
   const result = await prisma.character.create({
     data: { ...character },
   })
@@ -37,9 +38,10 @@ export async function registerPurchase(
   const populatedUser = {
     userId: purchase.userId,
     value: purchase.value,
+    createdAt: String(new Date().getTime()),
   }
 
   const result = await prisma.purchase.create({
-    data: { ...purchase },
+    data: { ...populatedUser },
   })
 }

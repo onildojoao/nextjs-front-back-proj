@@ -2,41 +2,70 @@
 "use client"
 
 import { findCharacters } from "@/lib/actions/findActions"
+import { CharacterItem } from "@/types/character"
 import { PencilIcon } from "@heroicons/react/20/solid"
 import { useSession } from "next-auth/react"
+import { useCallback, useEffect, useState } from "react"
 import { toast } from "react-toastify"
 
 function teste() {
   toast.success("Não deu tempo de implementar essa função!")
 }
 
-async function loadCharacters(session) {
+async function loadCharacters(session: any) {
   const characters = await findCharacters(session.user.id)
-  /* const mapped = () => {
-    characters.map((char) => (
-      <tr className="border-b dark:border-neutral-500">
-        <td className="whitespace-nowrap  px-6 py-4">{char.name}</td>
-        <td className="whitespace-nowrap  px-6 py-4">{char.class}</td>
-        <td className="whitespace-nowrap  px-6 py-4">101010</td>
-        <td className="whitespace-nowrap  px-6 py-4">
-          <div className="flex w-full justify-center">
-            <PencilIcon
-              onClick={teste}
-              className="w-7 p-1 self-center cursor-pointer hover:bg-blue-300 border rounded"
-            />
-          </div>
-        </td>
-      </tr>
-    ))
-  } */
+  console.log("Characters:" + characters)
   return characters
 }
 
 const CharactersTable = () => {
   const { data: session } = useSession()
 
-  const retrievedCharacters = loadCharacters(session)
-  console.log(retrievedCharacters)
+  const [characterList, setCharacterList] = useState<CharacterItem[]>()
+
+  const initCharacterData = useCallback(async () => {
+    const retrievedCharacters = await loadCharacters(session)
+    setCharacterList(retrievedCharacters)
+    console.log(retrievedCharacters)
+  }, [session])
+
+  useEffect(() => {
+    initCharacterData()
+  }, [initCharacterData])
+
+  function renderCharacterList(): React.ReactNode {
+    if (!characterList?.length) return
+
+    return (
+      <tbody>
+        {characterList?.map((characterItem, index) => (
+          <tr
+            key={`${characterItem.id}--${index}`}
+            className="border-b dark:border-neutral-500"
+          >
+            <td className="whitespace-nowrap  px-6 py-4">
+              {characterItem.name}
+            </td>
+            <td className="whitespace-nowrap  px-6 py-4">
+              {characterItem.class}
+            </td>
+            <td className="whitespace-nowrap  px-6 py-4">
+              {characterItem.createdAt ? characterItem.createdAt : "19/10/2023"}
+            </td>
+            <td className="whitespace-nowrap  px-6 py-4">
+              <div className="flex w-full justify-center">
+                <PencilIcon
+                  onClick={teste}
+                  className="w-7 p-1 self-center cursor-pointer hover:bg-blue-300 border rounded"
+                />
+              </div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    )
+  }
+
   return (
     <div className="flex flex-col justify-center w-full">
       <h2 className="text-center mb-5 font-bold">Histórico de Personagens</h2>
@@ -57,33 +86,8 @@ const CharactersTable = () => {
             </th>
           </tr>
         </thead>
-        <tbody>
-          {}
-          {/* {retrievedCharacters.map((char) => (
-            <tr className="border-b dark:border-neutral-500">
-              <td className="whitespace-nowrap  px-6 py-4">{char.name}</td>
-              <td className="whitespace-nowrap  px-6 py-4">{char.class}</td>
-              <td className="whitespace-nowrap  px-6 py-4">101010</td>
-              <td className="whitespace-nowrap  px-6 py-4">
-                <div className="flex w-full justify-center">
-                  <PencilIcon
-                    onClick={teste}
-                    className="w-7 p-1 self-center cursor-pointer hover:bg-blue-300 border rounded"
-                  />
-                </div>
-              </td>
-            </tr>
-          ))} */}
-          <tr className="border-b dark:border-neutral-500">
-            <td className="whitespace-nowrap  px-6 py-4">Foema</td>
-            <td className="whitespace-nowrap  px-6 py-4">Druid</td>
-            <td className="whitespace-nowrap  px-6 py-4">07/10/2023</td>
-            <td className="whitespace-nowrap  px-6 py-4">
-              <div className="flex w-full justify-center">
-                <PencilIcon className="w-7 p-1 self-center cursor-pointer hover:bg-blue-300 border rounded" />
-              </div>
-            </td>
-          </tr>
+        {renderCharacterList()}
+        {/* <tbody>
           <tr className="border-b dark:border-neutral-500">
             <td className="whitespace-nowrap  px-6 py-4">Ciantis</td>
             <td className="whitespace-nowrap  px-6 py-4">Huntress</td>
@@ -97,7 +101,7 @@ const CharactersTable = () => {
               </div>
             </td>
           </tr>
-        </tbody>
+        </tbody> */}
       </table>
     </div>
   )
