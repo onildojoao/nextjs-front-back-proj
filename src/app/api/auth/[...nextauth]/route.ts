@@ -21,7 +21,7 @@ export const authOptions: AuthOptions = {
         username: {
           label: "User Name",
           type: "text",
-          placeholder: "Your User Name",
+          placeholder: "Usuário",
         },
         password: {
           label: "Password",
@@ -35,18 +35,16 @@ export const authOptions: AuthOptions = {
           },
         })
 
-        if (!user) throw new Error("User name or password is not correct")
+        if (!user) throw new Error("Usuário ou senha inválida!")
 
         // This is Naive Way of Comparing The Passwords
-        if (!credentials?.password)
-          throw new Error("Please Provide Your Password")
+        if (!credentials?.password) throw new Error("Digite a senha!")
         const isPasswordCorrect = await bcrypt.compare(
           credentials.password,
           user.password
         )
 
-        if (!isPasswordCorrect)
-          throw new Error("User name or password is not correct")
+        if (!isPasswordCorrect) throw new Error("Usuário ou senha incorreta!")
 
         const { password, ...userWithoutPass } = user
         return userWithoutPass

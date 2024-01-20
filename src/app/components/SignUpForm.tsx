@@ -18,26 +18,25 @@ const FormSchema = z
   .object({
     firstName: z
       .string()
-      .min(2, "First name must be atleast 2 characters")
-      .max(45, "First name must be less than 45 characters"),
+      .min(2, "O nome precisa ter ao menos 2 caracteres!")
+      .max(45, "O nome pode ter no máximo 45 caracteres!"),
     lastName: z
       .string()
-      .min(2, "Last name must be atleast 2 characters")
-      .max(45, "Last name must be less than 45 characters")
+      .min(2, "O sobrenome precisa ter ao menos 2 caracteres!")
+      .max(45, "O sobrenome pode ter no máximo 45 caracteres!")
       .regex(new RegExp("^[a-zA-Z]+$"), "No special character allowed!"),
-    email: z.string().email("Please enter a valid email address"),
-   password: z
+    email: z.string().email("Digite um e-mail válido!"),
+    password: z
       .string()
-      .min(6, "Password must be at least 6 characters ")
-      .max(50, "Password must be less than 50 characters"),
+      .min(6, "A senha precisa ter ao menos 6 caracteres!")
+      .max(50, "A senha precisa pode ter no máximo 50 caracteres!"),
     confirmPassword: z
       .string()
-      .min(6, "Password must be at least 6 characters ")
-      .max(50, "Password must be less than 50 characters"),
-
+      .min(6, "A senha precisa ter ao menos 6 caracteres!")
+      .max(50, "A senha precisa pode ter no máximo 50 caracteres!"),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Password and confirm password doesn't match!",
+    message: "As senhas digitadas não são iguais!",
     path: ["confirmPassword"],
   })
 
@@ -66,9 +65,9 @@ const SignUpForm = () => {
     const { confirmPassword, ...user } = data
     try {
       const result = await registerUser(user)
-      toast.success("The User Registered Successfully.")
+      toast.success("Usuário cadastrado com sucesso!")
     } catch (error) {
-      toast.error("Something Went Wrong!")
+      toast.error("Algo deu errado...")
       console.error(error)
     }
   }

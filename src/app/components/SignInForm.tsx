@@ -9,22 +9,20 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, Input } from "@nextui-org/react"
 import { signIn } from "next-auth/react"
 
-import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { toast } from "react-toastify"
 import { z } from "zod"
-import NextAuthProviders from "./NextAuthProviders"
 
 interface Props {
   callbackUrl?: string
 }
 
 const FormSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
+  email: z.string().email("Digite um e-mail válido!"),
   password: z.string({
-    required_error: "Please enter your password",
+    required_error: "Digite a senha!",
   }),
 })
 
@@ -56,6 +54,7 @@ const SignInForm = (props: Props) => {
     }
     toast.success("Bem vindo ao seu Dashboard!")
     router.push(props.callbackUrl ? props.callbackUrl : "/")
+    redirect("/auth/dashboard")
   }
 
   return (
