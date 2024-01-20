@@ -66,20 +66,20 @@ model VerificationToken {
 //Relacionamento 1-n entre usuários e personagens
 model Character{
 id String    @id @default(cuid())
-userId String 
+userId String? 
 name String @unique
 class String
 createdAt BigInt?
 updatedAt BigInt?
-user User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+user User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 //Tabela de Compras
 //Relacionamento 1-n entre usuários e compras
 model Purchase {
 id String    @id @default(cuid())
-userId String 
-createdAt BigInt
+userId String? 
+createdAt BigInt?
 value Int
-user User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+user User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

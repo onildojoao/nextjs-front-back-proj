@@ -1,6 +1,6 @@
 "use server"
 
-import { User } from "@prisma/client"
+import { Character, Purchase, User } from "@prisma/client"
 
 import * as bcrypt from "bcrypt"
 
@@ -12,11 +12,29 @@ export async function registerUser(
     "id" | "emailVerified" | "image" | "phone" | "createdAt" | "updatedAt"
   >
 ) {
-const populatedUser = user
+  const populatedUser = user
   const result = await prisma.user.create({
     data: {
       ...user,
       password: await bcrypt.hash(user.password, 10),
     },
   })
+}
+
+export async function registerCharacter(
+  character: Omit<Character, "id" | "userId" | "createdAt" | "updatedAt">
+) {
+  const populatedUser = character
+  const result = await prisma.character.create({
+    data: { ...character },
+  })
+}
+
+export async function registerPurchase(
+  purchase: Omit<Purchase, "id" | "userId" | "createdAt" | "user">
+) {
+  const populatedUser = purchase
+  /* const result = await prisma.purchase.create({
+    data: { ...purchase },
+  }) */
 }

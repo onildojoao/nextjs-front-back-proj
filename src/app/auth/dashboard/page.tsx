@@ -5,12 +5,12 @@ import PurchasesTable from "@/app/components/PurchasesTable"
 
 const DashboardPage = () => {
   return (
-    <main className="grid justify-items-center col-span-2 p-2 mt-5 shadow border-3 rounded-lg bg-white">
-      <div>
+    <main className="flex gap-3 items-center justify-center p-5 h-[calc(100vh-65px)]">
+      <div className="flex flex-col gap- items-center p-5 shadow border-3 rounded-lg w-[500px] max-w-4xl space-y-5 bg-white min-h-[600px]">
         <CharactersForm />
         <CharactersTable />
       </div>
-      <div>
+      <div className="flex flex-col gap- items-center p-5 shadow border-3 rounded-lg w-[500px] max-w-4xl space-y-5 bg-white min-h-[600px]">
         <PurchasesForm />
         <PurchasesTable />
       </div>

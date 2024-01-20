@@ -1,5 +1,90 @@
+"use client"
+import { registerCharacter, registerUser } from "@/lib/actions/authActions"
+import {
+  EnvelopeIcon,
+  EyeIcon,
+  EyeSlashIcon,
+  KeyIcon,
+  UserIcon,
+} from "@heroicons/react/20/solid"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Button, Input } from "@nextui-org/react"
+import { redirect, useRouter } from "next/navigation"
+import { useState } from "react"
+import { SubmitHandler, useForm } from "react-hook-form"
+import { toast } from "react-toastify"
+import { z } from "zod"
+
+const FormSchema = z.object({
+  name: z
+    .string()
+    .min(2, "O nome precisa ter ao menos 2 caracteres!")
+    .max(45, "O nome pode ter no máximo 45 caracteres!"),
+  class: z
+    .string()
+    .min(2, "O sobrenome precisa ter ao menos 2 caracteres!")
+    .max(45, "O sobrenome pode ter no máximo 45 caracteres!"),
+})
+
+type InputType = z.infer<typeof FormSchema>
+
 const CharactersForm = () => {
-  return <div>CharactersForm</div>
+  const router = useRouter()
+  const {
+    register,
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors, isSubmitting },
+  } = useForm<InputType>({
+    resolver: zodResolver(FormSchema),
+  })
+
+  const saveCharacter: SubmitHandler<InputType> = async (data) => {
+    const character = data
+    try {
+      const result = await registerCharacter(character)
+      toast.success("Personagem criado!")
+    } catch (error) {
+      toast.error("Algo deu errado...")
+      console.error(error)
+    }
+    router.refresh()
+    /* router.push("/auth/dashboard") */
+  }
+  return (
+    <form
+      onSubmit={handleSubmit(saveCharacter)}
+      className="p-5 w-[500px] max-w-4xl space-y-5"
+    >
+      <h1 className="text-center text-black text-2xl font-bold w-full">
+        Criação de Personagem
+      </h1>
+      <Input
+        {...register("name")}
+        errorMessage={errors.name?.message}
+        isInvalid={!!errors.name}
+        label="Nome do Personagem"
+      />
+      <Input
+        {...register("class")}
+        errorMessage={errors.class?.message}
+        isInvalid={!!errors.class}
+        label="Classe"
+      />
+
+      <div className="flex justify-center col-span-2">
+        <Button
+          className="w-full bg-test text-white "
+          type="submit"
+          disabled={isSubmitting}
+          isLoading={isSubmitting}
+        >
+          {isSubmitting ? "Criando..." : "Criar"}
+        </Button>
+      </div>
+    </form>
+  )
 }
 
 export default CharactersForm

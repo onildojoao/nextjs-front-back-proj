@@ -25,7 +25,7 @@ const FormSchema = z
       .string()
       .min(2, "O sobrenome precisa ter ao menos 2 caracteres!")
       .max(45, "O sobrenome pode ter no máximo 45 caracteres!")
-      .regex(new RegExp("^[a-zA-Z]+$"), "No special character allowed!"),
+      .regex(new RegExp("^[a-zA-Z]+$"), "Caracteres especiais não são permitidos!"),
     email: z.string().email("Digite um e-mail válido!"),
     password: z
       .string()
@@ -55,8 +55,6 @@ const SignUpForm = () => {
   } = useForm<InputType>({
     resolver: zodResolver(FormSchema),
   })
-  const [passStrength, setPassStrength] = useState(0)
-  const [isVisiblePass, setIsVisiblePass] = useState(false)
 
   const [isVisiblePassword, setIsVisiblePassword] = useState(false)
   const toggleVisiblePassword = () => {
