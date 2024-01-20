@@ -2,6 +2,11 @@ import CharactersForm from "@/app/components/CharactersForm"
 import CharactersTable from "@/app/components/CharactersTable"
 import PurchasesForm from "@/app/components/PurchasesForm"
 import PurchasesTable from "@/app/components/PurchasesTable"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+}
 
 const DashboardPage = () => {
   return (
