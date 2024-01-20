@@ -5,10 +5,11 @@ import {
   EyeIcon,
   EyeSlashIcon,
   KeyIcon,
-  UserIcon
+  UserIcon,
 } from "@heroicons/react/20/solid"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, Input } from "@nextui-org/react"
+import { redirect, useRouter } from "next/navigation"
 import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { toast } from "react-toastify"
@@ -43,6 +44,7 @@ const FormSchema = z
 type InputType = z.infer<typeof FormSchema>
 
 const SignUpForm = () => {
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -65,12 +67,13 @@ const SignUpForm = () => {
     const { confirmPassword, ...user } = data
     try {
       const result = await registerUser(user)
-      toast.success("Usuário cadastrado com sucesso!")
+      toast.success("Cadastro criando com sucesso! Já pode acessar sua conta!")
     } catch (error) {
       toast.error("Algo deu errado...")
       console.error(error)
     }
-  }
+    router.push("/auth/signin")
+    }
   return (
     <form
       onSubmit={handleSubmit(saveUser)}

@@ -54,7 +54,7 @@ const SignInForm = (props: Props) => {
     }
     toast.success("Bem vindo ao seu Dashboard!")
     router.push(props.callbackUrl ? props.callbackUrl : "/")
-    redirect("/auth/dashboard")
+    router.push("/auth/dashboard")
   }
 
   return (

@@ -12,14 +12,16 @@ const SigninButton = () => {
       {session && session.user ? (
         <>
           <Link
+            className="text-black font-bold"
             href={"/profile"}
           >{`${session.user.firstName} ${session.user.lastName}`}</Link>
-          <Link
-            className="tex-sky-500 hover:text-sky-600 transition-colors"
+          <Button
+            as={Link}
+            className="text-black font-bold"
             href={"/api/auth/signout"}
           >
-            Sign Out
-          </Link>
+            Sair
+          </Button>
         </>
       ) : (
         <>
