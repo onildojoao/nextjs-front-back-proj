@@ -10,7 +10,7 @@ import { z } from "zod"
 
 const FormSchema = z.object({
   /*  value: z.string(),  */
-  value: z.coerce.number().min(10),
+  value: z.string(),
   /* value: z.number()
   .or(z.string().regex(/\d+/).transform(Number))
   .refine((n) => n >= 0),*/

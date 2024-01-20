@@ -2,7 +2,6 @@
 "use client"
 
 import { findCharacters } from "@/lib/actions/findActions"
-import prisma from "@/lib/prisma"
 import { PencilIcon } from "@heroicons/react/20/solid"
 import { useSession } from "next-auth/react"
 import { toast } from "react-toastify"
@@ -13,7 +12,7 @@ function teste() {
 
 async function loadCharacters(session) {
   const characters = await findCharacters(session.user.id)
-  const mapped =  ()  => {
+  /* const mapped = () => {
     characters.map((char) => (
       <tr className="border-b dark:border-neutral-500">
         <td className="whitespace-nowrap  px-6 py-4">{char.name}</td>
@@ -29,7 +28,7 @@ async function loadCharacters(session) {
         </td>
       </tr>
     ))
-  }
+  } */
   return characters
 }
 
@@ -75,10 +74,10 @@ const CharactersTable = () => {
               </td>
             </tr>
           ))} */}
-           <tr className="border-b dark:border-neutral-500">
-            <td className="whitespace-nowrap  px-6 py-4">Nome 01</td>
-            <td className="whitespace-nowrap  px-6 py-4">Classe 01</td>
-            <td className="whitespace-nowrap  px-6 py-4">101010</td>
+          <tr className="border-b dark:border-neutral-500">
+            <td className="whitespace-nowrap  px-6 py-4">Foema</td>
+            <td className="whitespace-nowrap  px-6 py-4">Druid</td>
+            <td className="whitespace-nowrap  px-6 py-4">07/10/2023</td>
             <td className="whitespace-nowrap  px-6 py-4">
               <div className="flex w-full justify-center">
                 <PencilIcon className="w-7 p-1 self-center cursor-pointer hover:bg-blue-300 border rounded" />
@@ -86,9 +85,9 @@ const CharactersTable = () => {
             </td>
           </tr>
           <tr className="border-b dark:border-neutral-500">
-            <td className="whitespace-nowrap  px-6 py-4">Nome 01</td>
-            <td className="whitespace-nowrap  px-6 py-4">Classe 01</td>
-            <td className="whitespace-nowrap  px-6 py-4">101010</td>
+            <td className="whitespace-nowrap  px-6 py-4">Ciantis</td>
+            <td className="whitespace-nowrap  px-6 py-4">Huntress</td>
+            <td className="whitespace-nowrap  px-6 py-4">19/10/2023</td>
             <td className="whitespace-nowrap  px-6 py-4">
               <div className="flex w-full justify-center">
                 <PencilIcon
@@ -97,7 +96,7 @@ const CharactersTable = () => {
                 />
               </div>
             </td>
-          </tr> 
+          </tr>
         </tbody>
       </table>
     </div>
