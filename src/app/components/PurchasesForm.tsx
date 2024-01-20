@@ -3,6 +3,7 @@ import { registerPurchase } from "@/lib/actions/authActions"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, Input } from "@nextui-org/react"
+import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { toast } from "react-toastify"
@@ -20,6 +21,7 @@ const FormSchema = z.object({
 type InputType = z.infer<typeof FormSchema>
 
 const PurchasesForm = () => {
+  const { data: session } = useSession()
   const router = useRouter()
   const {
     register,
@@ -32,7 +34,11 @@ const PurchasesForm = () => {
   })
 
   const savePurchase: SubmitHandler<InputType> = async (data) => {
-    const purchase = data
+    const purchase = {
+      value: data.value,
+      userId: session.user.id,
+    }
+
     try {
       console.log(purchase)
       const result = await registerPurchase(purchase)

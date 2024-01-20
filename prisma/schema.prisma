@@ -44,8 +44,8 @@ model User {
   password      String
   email         String    @unique
   emailVerified DateTime?
-createdAt BigInt?
-  updatedAt BigInt?
+createdAt String?
+  updatedAt String?
   phone         String?
   image         String?
   accounts      Account[]
@@ -69,8 +69,8 @@ id String    @id @default(cuid())
 userId String? 
 name String @unique
 class String
-createdAt BigInt?
-updatedAt BigInt?
+createdAt String?
+updatedAt String?
 user User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -79,7 +79,7 @@ user User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
 model Purchase {
 id String    @id @default(cuid())
 userId String? 
-createdAt BigInt?
+createdAt String?
 value String
 user User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

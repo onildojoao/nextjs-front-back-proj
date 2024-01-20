@@ -9,6 +9,7 @@ import {
 } from "@heroicons/react/20/solid"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, Input } from "@nextui-org/react"
+import { useSession } from "next-auth/react"
 import { redirect, useRouter } from "next/navigation"
 import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
@@ -29,6 +30,7 @@ const FormSchema = z.object({
 type InputType = z.infer<typeof FormSchema>
 
 const CharactersForm = () => {
+  const { data: session } = useSession()
   const router = useRouter()
   const {
     register,
@@ -41,7 +43,14 @@ const CharactersForm = () => {
   })
 
   const saveCharacter: SubmitHandler<InputType> = async (data) => {
-    const character = data
+    const character = {
+      name: data.name,
+      class: data.class,
+      userId: session.user.id,
+      /* createdAt: Date.now(),
+      updatedAt: Date.now(), */
+    }
+    /* const character = data */
     try {
       const result = await registerCharacter(character)
       toast.success("Personagem criado!")

@@ -25,7 +25,10 @@ const FormSchema = z
       .string()
       .min(2, "O sobrenome precisa ter ao menos 2 caracteres!")
       .max(45, "O sobrenome pode ter no máximo 45 caracteres!")
-      .regex(new RegExp("^[a-zA-Z]+$"), "Caracteres especiais não são permitidos!"),
+      .regex(
+        new RegExp("^[a-zA-Z]+$"),
+        "Caracteres especiais não são permitidos!"
+      ),
     email: z.string().email("Digite um e-mail válido!"),
     password: z
       .string()
@@ -62,16 +65,24 @@ const SignUpForm = () => {
   }
 
   const saveUser: SubmitHandler<InputType> = async (data) => {
+    const newUser = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      password: data.password,
+      /* createdAt: String(Date.now()),
+      updatedAt: String(Date.now()), */
+    }
     const { confirmPassword, ...user } = data
     try {
-      const result = await registerUser(user)
+      const result = await registerUser(newUser)
       toast.success("Cadastro criando com sucesso! Já pode acessar sua conta!")
+      router.push("/auth/signin")
     } catch (error) {
       toast.error("Algo deu errado...")
       console.error(error)
     }
-    router.push("/auth/signin")
-    }
+  }
   return (
     <form
       onSubmit={handleSubmit(saveUser)}
