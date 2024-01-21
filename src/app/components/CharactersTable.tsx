@@ -12,6 +12,7 @@ function teste() {
   toast.success("Não deu tempo de implementar essa função!")
 }
 
+//Busca no banco de dados para carregar os personagens
 async function loadCharacters(session: any) {
   const characters = await findCharacters(session.user.id)
   console.log("Characters:" + characters)
@@ -33,6 +34,7 @@ const CharactersTable = () => {
     initCharacterData()
   }, [initCharacterData])
 
+  //Processamento das datas de milissegundos para DD/MM/YYYY
   function processStringDate(param: string | null) {
     if (!param) return
     console.log(param)
@@ -43,6 +45,7 @@ const CharactersTable = () => {
     return `${day}/${month}/${year}`
   }
 
+  //Renderização dinâmica das linhas da tabela
   function renderCharacterList(): React.ReactNode {
     if (!characterList?.length) return
 

@@ -8,6 +8,7 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { toast } from "react-toastify"
 import { z } from "zod"
 
+//Validações do formulário com o Zod
 const FormSchema = z.object({
   name: z
     .string()
@@ -46,16 +47,17 @@ const CharactersForm = () => {
       class: data.class,
       userId: session.user.id,
     }
-    /* const character = data */
+
     try {
+      //Chamada da Rota para salvar o usuário
       const result = await registerCharacter(character)
-      toast.success("Personagem criado!")
+      toast.success("Personagem criado! Atualize a página para ver as informações!")
     } catch (error) {
       toast.error("Algo deu errado...")
       console.error(error)
     }
+    //Atualização da página para exibir os novos dados
     router.refresh()
-    /* router.push("/auth/dashboard") */
   }
   return (
     <form

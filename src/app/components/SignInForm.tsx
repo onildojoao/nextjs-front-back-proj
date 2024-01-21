@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, Input } from "@nextui-org/react"
 import { signIn } from "next-auth/react"
 
-import { redirect, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { toast } from "react-toastify"
@@ -18,7 +18,7 @@ import { z } from "zod"
 interface Props {
   callbackUrl?: string
 }
-
+//Validações do formulário com o Zod
 const FormSchema = z.object({
   email: z.string().email("Digite um e-mail válido!"),
   password: z.string({
@@ -43,6 +43,7 @@ const SignInForm = (props: Props) => {
   })
 
   const onSubmit: SubmitHandler<InputType> = async (data) => {
+    //Realização do login
     const result = await signIn("credentials", {
       redirect: false,
       username: data.email,
@@ -54,7 +55,9 @@ const SignInForm = (props: Props) => {
     }
     toast.success("Bem vindo ao seu Dashboard!")
     router.push(props.callbackUrl ? props.callbackUrl : "/")
+    //Atualização da página para exibir os novos dados
     router.push("/auth/dashboard")
+    return
   }
 
   return (

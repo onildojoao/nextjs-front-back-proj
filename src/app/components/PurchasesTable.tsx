@@ -6,6 +6,7 @@ import { log } from "console"
 import { useSession } from "next-auth/react"
 import { useCallback, useEffect, useState } from "react"
 
+//Busca no banco de dados para carregar os personagens
 async function loadPurchases(session: any) {
   const purchases: PurchaseItem[] = await findPurchases(session.user.id)
   return purchases
@@ -25,6 +26,7 @@ const PurchasesTable = () => {
     initPurchaseData()
   }, [initPurchaseData])
 
+  //Processamento das datas de milissegundos para DD/MM/YYYY
   function processStringDate(param: string | null) {
     if (!param) return
     const date = new Date(Number(param))
@@ -34,6 +36,7 @@ const PurchasesTable = () => {
     return `${day}/${month}/${year}`
   }
 
+  //Renderização dinâmica das linhas da tabela
   function renderPurchaseList(): React.ReactNode {
     if (!purchaseList?.length) return
 

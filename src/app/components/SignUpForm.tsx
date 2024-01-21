@@ -9,12 +9,13 @@ import {
 } from "@heroicons/react/20/solid"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, Input } from "@nextui-org/react"
-import { redirect, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { toast } from "react-toastify"
 import { z } from "zod"
 
+//Validações do formulário com o Zod
 const FormSchema = z
   .object({
     firstName: z
@@ -70,14 +71,15 @@ const SignUpForm = () => {
       lastName: data.lastName,
       email: data.email,
       password: data.password,
-      /* createdAt: String(Date.now()),
-      updatedAt: String(Date.now()), */
     }
     const { confirmPassword, ...user } = data
     try {
+      //Chamada da Rota para salvar o usuário
       const result = await registerUser(newUser)
       toast.success("Cadastro criando com sucesso! Já pode acessar sua conta!")
+      //Redirecionamento da rota para a página de login
       router.push("/auth/signin")
+      return
     } catch (error) {
       toast.error("Algo deu errado...")
       console.error(error)

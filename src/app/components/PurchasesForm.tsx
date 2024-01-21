@@ -8,14 +8,9 @@ import { useRouter } from "next/navigation"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { toast } from "react-toastify"
 import { z } from "zod"
-
+//Validações do formulário com o Zod
 const FormSchema = z.object({
-  /*  value: z.string(),  */
   value: z.string(),
-  /* value: z.number()
-  .or(z.string().regex(/\d+/).transform(Number))
-  .refine((n) => n >= 0),*/
-  /* createdAt: z.coerce.bigint().refine((data) => data > Date.now()), */
 })
 
 type InputType = z.infer<typeof FormSchema>
@@ -47,14 +42,17 @@ const PurchasesForm = () => {
 
     try {
       console.log(purchase)
+      //Chamada da Rota para salvar a compra
       const result = await registerPurchase(purchase)
-      toast.success("Compra realizada!")
+      toast.success(
+        "Compra realizada! Atualize a página para ver as informações!"
+      )
     } catch (error) {
       toast.error("Algo deu errado...")
       console.error(error)
     }
+    //Atualização da página para exibir os novos dados
     router.refresh()
-    /* router.push("/auth/dashboard") */
   }
   return (
     <form

@@ -5,7 +5,6 @@ const handler = NextAuth(authOptions)
 
 export { handler as GET, handler as POST } */
 
-
 import prisma from "@/lib/prisma"
 import * as bcrypt from "bcrypt"
 import { AuthOptions } from "next-auth"
@@ -34,6 +33,8 @@ const authOptions: AuthOptions = {
           type: "password",
         },
       },
+
+      //Função de autorização de login
       async authorize(credentials) {
         const user = await prisma.user.findUnique({
           where: {

@@ -6,21 +6,30 @@ import * as bcrypt from "bcrypt"
 
 import { prisma } from "@/lib/prisma"
 
+//Função de criação de usuários com o prisma
 export async function registerUser(
   user: Omit<
     User,
     "id" | "emailVerified" | "image" | "phone" | "createdAt" | "updatedAt"
   >
 ) {
-  const populatedUser = user
+  const populatedUser = {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    password: user.password,
+    createdAt: String(new Date().getTime()),
+  }
+
   const result = await prisma.user.create({
     data: {
-      ...user,
+      ...populatedUser,
       password: await bcrypt.hash(user.password, 10),
     },
   })
 }
 
+//Função de criação de personagens com o prisma
 export async function registerCharacter(
   character: Omit<Character, "id" | "createdAt" | "updatedAt">
 ) {
@@ -36,6 +45,7 @@ export async function registerCharacter(
   })
 }
 
+//Função de criação de compras com o prisma
 export async function registerPurchase(
   purchase: Omit<Purchase, "id" | "createdAt">
 ) {

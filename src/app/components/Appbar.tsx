@@ -1,7 +1,8 @@
-import { Button, Navbar, NavbarContent, NavbarItem } from "@nextui-org/react"
+import { Navbar, NavbarContent, NavbarItem } from "@nextui-org/react"
 import SigninButton from "./SigninButton"
-import Link from "next/link"
 
+
+//Navbar para auxiliar e controlar os acessos do usuário
 const Appbar = () => {
   return (
     <Navbar className="bg-white" isBordered>

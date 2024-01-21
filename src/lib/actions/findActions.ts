@@ -2,31 +2,16 @@
 
 import { prisma } from "@/lib/prisma"
 
+//Função de busca de personagens com o prisma
 export async function findCharacters(userId: any) {
   return prisma.character.findMany({
     where: { userId: userId },
   })
 }
 
+//Função de busca de compras com o prisma
 export async function findPurchases(userId: any) {
-  /*  const result = await prisma.purchase.findMany({
-    where: { userId: userId },
-  })
-  console.log("Compras:" + result)
-  return result */
-
-  /* prisma.purchase
-  .findMany({
-    where: { userId: userId },
-  })
-  .then((res) => {
-    return res
-  })
-  .catch((err) => {
-    console.error("Erro ao buscar compras:" + err)
-  }) */
-
-  return prisma.purchase.findMany({
+    return prisma.purchase.findMany({
     where: { userId: userId },
   })
 }
