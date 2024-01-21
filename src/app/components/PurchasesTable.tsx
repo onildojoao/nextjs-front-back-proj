@@ -8,7 +8,6 @@ import { useCallback, useEffect, useState } from "react"
 
 async function loadPurchases(session: any) {
   const purchases: PurchaseItem[] = await findPurchases(session.user.id)
-  console.log(purchases)
   return purchases
 }
 
@@ -20,7 +19,6 @@ const PurchasesTable = () => {
   const initPurchaseData = useCallback(async () => {
     const retrievedPurchases = await loadPurchases(session)
     setPurchaseList(retrievedPurchases)
-    console.log(retrievedPurchases)
   }, [session])
 
   useEffect(() => {
@@ -29,7 +27,6 @@ const PurchasesTable = () => {
 
   function processStringDate(param: string | null) {
     if (!param) return
-    console.log(param)
     const date = new Date(Number(param))
     const year = date.getFullYear()
     const month = date.getMonth() + 1

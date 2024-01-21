@@ -33,6 +33,16 @@ const CharactersTable = () => {
     initCharacterData()
   }, [initCharacterData])
 
+  function processStringDate(param: string | null) {
+    if (!param) return
+    console.log(param)
+    const date = new Date(Number(param))
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    return `${day}/${month}/${year}`
+  }
+
   function renderCharacterList(): React.ReactNode {
     if (!characterList?.length) return
 
@@ -50,7 +60,7 @@ const CharactersTable = () => {
               {characterItem.class}
             </td>
             <td className="whitespace-nowrap  px-6 py-4">
-              {characterItem.createdAt ? characterItem.createdAt : "19/10/2023"}
+              {processStringDate(characterItem.createdAt)}
             </td>
             <td className="whitespace-nowrap  px-6 py-4">
               <div className="flex w-full justify-center">

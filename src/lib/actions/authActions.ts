@@ -22,12 +22,17 @@ export async function registerUser(
 }
 
 export async function registerCharacter(
-  character: Omit<Character, "id" | "userId" | "createdAt" | "updatedAt">
+  character: Omit<Character, "id" | "createdAt" | "updatedAt">
 ) {
-  const populatedUser = character
-  let createdAd = String(new Date().getTime())
+  const populatedUser = {
+    userId: character.userId,
+    name: character.name,
+    class: character.class,
+    createdAt: String(new Date().getTime()),
+  }
+
   const result = await prisma.character.create({
-    data: { ...character },
+    data: { ...populatedUser },
   })
 }
 
